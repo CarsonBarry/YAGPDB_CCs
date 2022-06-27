@@ -1,0 +1,14 @@
+{{ $channelID := .Message.ChannelID }}
+{{ $sentID := sendMessageNoEscapeRetID $channelID "TempMessage" }}
+{{ editMessage $channelID $sentID "<@&role1>" }}
+{{ editMessage $channelID $sentID "<@&role2>" }}
+{{ editMessage $channelID $sentID "<@&role3>" }}
+{{ editMessage $channelID $sentID "<@&role4>" }}
+{{ editMessage $channelID $sentID "<@&role5>" }}
+{{ editMessage $channelID $sentID "<@&role6>" }}
+{{ editMessage $channelID $sentID "<@&role7>" }}
+{{ editMessage $channelID $sentID "<@&role8>" }}
+{{ editMessage $channelID $sentID "<@&role9>" }}
+{{ editMessage $channelID $sentID "<@&role10>" }}
+{{ deleteMessage $channelID $sentID 1 }}
+{{ deleteMessage $channelID .Message.ID 1}}
