@@ -1,0 +1,27 @@
+{{/* Edit this command as needed to update embeds */}}
+{{ $args := parseArgs 4 "Syntax is <channelID> <messageID> <channelID> <messageID>"
+	(carg "string" "Broken - Embed Message Channel ID")
+	(carg "string" "Broken - Embed Message ID")
+	(carg "string" "Backup - Embed Message Channel ID")
+	(carg "string" "Backup - Embed Message ID")
+}}
+
+{{/* Command Variables */}}
+{{ $embedChannelID_1		:= ($args.Get 0) }}
+{{ $embedMessageID_1 		:= ($args.Get 1) }}
+{{ $embedChannelID_2		:= ($args.Get 2) }}
+{{ $embedMessageID_2 		:= ($args.Get 3) }}
+
+
+{{/* Unpack Old Embed - Complete */}}
+{{ $embed_1 := (index (getMessage $embedChannelID_1 $embedMessageID_1).Embeds 0) }}
+{{ $embed_2 := (index (getMessage $embedChannelID_2 $embedMessageID_2).Embeds 0) }}
+
+
+{{/* Output broken embed to log */}}
+{{ sendMessage 987256217179131954 "This embed was broken and has been restored with the one below it." }}
+{{ sendMessage 987256217179131954 $embed_1 }}
+{{ sendMessage 987256217179131954 $embed_2 }}
+
+{{/* Update original embed in place */}}
+{{ editMessage $embedChannelID_1 $embedMessageID_1 $embed_2 }}
