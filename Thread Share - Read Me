@@ -19,8 +19,9 @@ Set up a command each with a Reaction and Regex trigger, respectively. Same code
 Regex: .*
 Reaction: Added and removed, require "Sort" Role.
 Change Role ID in removeRoleID line to match your "Sort" Role.
-Change each Role ID in the If block to the ID of the Role who's name matches the value in the relevant if/if else. 
+Change each Role ID in the if block to the ID of the Role who's name matches the value in the relevant if/if else. 
 
 Share:
 Set it up with  so that users can run the "-share" command in channels where they can make threads (and you want them 
 to be able to add people to them like this).
+Change each Role ID in the messageEdits to the ID of the 10 count roles, respectively.
