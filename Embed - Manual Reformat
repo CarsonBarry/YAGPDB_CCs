@@ -1,0 +1,59 @@
+{{ $reactionChannelID := .ReactionMessage.ChannelID }}
+{{ $reactionMessageID := .ReactionMessage.ID }}
+
+{{ if and
+(eq (index .ReactionMessage.Reactions 0).Emoji.Name "😉")
+(eq (index .ReactionMessage.Reactions 0).Count 1)
+}}
+
+{{ deleteAllMessageReactions $reactionChannelID	$reactionMessageID }}
+
+{{/* Command Variables */}}
+{{ $embedChannelID		:= $reactionChannelID }}
+{{ $embedMessageID 		:= $reactionMessageID  }}
+
+	{{/* Unpack Old Embed - Complete */}}
+	{{ $embedOld := (index (getMessage $embedChannelID $embedMessageID).Embeds 0) }}
+	{{ $authorName		:= str $embedOld.Author.Name }}
+	{{ $embedTitle 		:= str $embedOld.Title }}
+	{{ $embedDescription	:= str $embedOld.Description }}
+	{{ $authorURL		:= str $embedOld.Author.URL }}
+	{{ $authorIcon		:= str $embedOld.Author.IconURL }}
+	{{ $embedThumbnail 	:= str $embedOld.Thumbnail }}
+	{{ $field0	:= str (index $embedOld.Fields 0).Value }}
+	{{ $field1	:= str (index $embedOld.Fields 1).Value }}
+	{{ $messageID		:= $reactionMessageID }}
+	{{/* $embedFooter 			:= $embedOld.Footer */}}
+    {{/* $embedFooterText         := $embedFooter.Text */}}
+
+	{{ $embedFooter := (sdict "text" (str $messageID) ) }}
+	
+
+    {{/* Generate current timestamp for update */}}
+    {{ $timestamp   := str (print currentTime.Year "-" (toInt currentTime.Month) "-" currentTime.Day "T" currentTime.Hour ":" currentTime.Minute ":" currentTime.Second "+00:00") }}
+
+	{{/* Build new embed */}}
+	{{ $embedUpdate := cembed
+		"color" 000000
+		"author" (sdict	"name" ($authorName) "url" $authorURL "icon_url" $authorIcon)
+		"thumbnail" (sdict "url" $embedThumbnail )
+		"title" ($embedTitle)
+		"description" $embedDescription
+		"fields" (cslice 
+			(sdict "name" "Links" "value" "-" "inline" false)
+			(sdict "name" "Additional Info" "value" "-" "inline" false)
+			(sdict "name" "Version" "value" $field0 "inline" true)
+			(sdict "name" "Project Leads" "value" $field1 "inline" true)
+			(sdict "name" "Contributors" "value" "-" "inline" true)
+		)
+		"footer" $embedFooter
+        "timestamp" $timestamp
+	}} 
+
+	{{/* Output old embed to log */}}
+	{{ sendMessage 987256217179131954 $embedOld }}
+
+	{{/* Update original embed in place */}}
+	{{ editMessage $embedChannelID $embedMessageID $embedUpdate }}
+
+{{else}} {{end}}
