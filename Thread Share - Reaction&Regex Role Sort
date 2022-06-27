@@ -1,0 +1,24 @@
+{{$memberCount := toInt (dbGet 1 "memberCount").Value}}
+
+{{if (lt $memberCount 200)}}
+	{{addRoleID 984093300036349994}}
+{{else if (lt $memberCount 300)}}
+	{{addRoleID 984093390876586044}}
+{{else if (lt $memberCount 400)}}
+	{{addRoleID 984114948806434856}}
+{{else if (lt $memberCount 500)}}
+	{{addRoleID 984093457159164004}}
+{{else if (lt $memberCount 600)}}
+	{{addRoleID 984093768925986816}}
+{{else if (lt $memberCount 700)}}
+	{{addRoleID 984093820494958663}}
+{{else if (lt $memberCount 800)}}
+	{{addRoleID 984093888920829982}}
+{{else if (lt $memberCount 900)}}
+	{{addRoleID 984093918876561488}}
+{{else}}
+	{{addRoleID 984093962602151966}}
+{{end}}
+
+{{removeRoleID 984152084297420800}}
+{{dbIncr 1 "memberCount" 1}}
