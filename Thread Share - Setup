@@ -1,0 +1,5 @@
+{{/* Edit the value (###) and run this command to manually set the count to your current server headcount */}}
+
+{{ dbSet 1 "memberCount" ### }}
+
+{{ $memberCount := toInt (dbGet 1 "memberCount").Value }}
