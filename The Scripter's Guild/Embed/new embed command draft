@@ -1,0 +1,106 @@
+{{ $update			:= true }}
+{{ $new 			:= false }}
+{{ $logChannel		:= "nil" }}
+{{ $backupChannelID	:= "nil" }}
+{{ $backupMessageID	:= "" }}
+{{ $targetChannel 	:= "nil" }}
+{{ $index 			:= 0 }}
+{{ $value			:= "" }}
+{{ $logMessage      := "Placeholder" }}
+
+{{ if not (eq (len .CmdArgs) 5) }}
+	Help message
+{{ else }}
+	{{ $embedChannelID		:= ($args.Get 0) }}
+	{{ $embedMessageID		:= ($args.Get 1) }}
+	{{ $subCommand			:= ($args.Get 2) }}
+	{{ $arg4	 			:= ($args.Get 3) }}
+	{{ $arg5				:= ($args.Get 4) }}
+	{{ $embedOld			:= (index (getMessage $embedChannelID $embedMessageID).Embeds 0) }}
+	{{ $authorName			:= str $embedOld.Author.Name }}
+	{{ $authorURL			:= str $embedOld.Author.URL }}
+	{{ $authorIcon			:= str $embedOld.Author.IconURL }}
+	{{ $embedTitle			:= str $embedOld.Title }}
+	{{ $embedDescription	:= str $embedOld.Description }}
+	{{ $embedThumbnail		:= str $embedOld.Thumbnail }}
+	{{ $embedFooter			:= $embedOld.Footer }}
+	{{ $embedFooterText		:= $embedFooter.Text }}
+	{{ $numFields			:= len $embedOld.Fields }}
+	{{ $fields				:= cslice (sdict "name" "" "value" "" "inline" false ) }}
+	
+	{{ if ( gt $numFields 0 ) }}
+		{{ $fields = cslice (index $embedOld.Fields 0) }}
+		{{ $i := 1 }} {{ while ( lt $i $numFields ) }}
+			{{- $fields = $fields.Append (index $embedOld.Fields $i) -}}
+			{{- $i = ( add $i 1 ) -}}
+		{{ end }}
+	{{ end }}
+	
+	{{ $month := ( toInt currentTime.Month ) }} {{ if (lt $month 10 ) }} {{ $month = ( print "0" ( str $month ) ) }} {{ end }}
+	{{ $day := ( currentTime.Day ) }} 			{{ if (lt $day 10 ) }} {{ $day = ( print "0" ( str $day ) ) }} {{ end }}
+	{{ $hour := ( currentTime.Hour ) }} 		{{ if (lt $hour 10 ) }} {{ $hour = ( print "0" ( str $hour ) ) }} {{ end }}
+	{{ $minute := ( currentTime.Minute ) }} 	{{ if (lt $minute 10 ) }} {{ $minute = ( print "0" ( str $minute ) ) }} {{ end }}
+	{{ $timestamp := str ( print currentTime.Year "-" $month "-" $day "T" $hour ":" $minute ":00+00:00" ) }}
+	
+	{{ block "constructEmbed" }}
+		{{- $embedUpdate = cembed
+			"color" $color
+			"author" (sdict	"name" $authorName
+							"url" $authorURL
+							"icon_url" $authorIcon )
+			"thumbnail" ( sdict "url" $embedThumbnail )
+			"title" $embedTitle
+			"description" $embedDescription
+			"fields" $fields
+			"footer" $embedFooter
+			"timestamp" $timestamp
+		-}}
+	{{ end }}
+
+	{{ if ( eq $subCommand "author") }}
+		{{ $authorName = $value }}
+	{{ else if ( eq $subCommand "thumbnail") }}
+		{{ $embedThumbnail = $value }}
+	{{ else if ( eq $subCommand "title") }}  
+		{{ $embedTitle = $value }}
+	{{ else if ( eq $subCommand "description") }}  
+		{{ $embedDescription = $value }}
+	{{ else if ( eq $subCommand "footer") }}  
+		{{ $embedFooter = (sdict "text" $embedFooterText) }}
+	{{ else if ( <<contains field>> }}
+		{{ template field }}
+	{{ else if ( eq $subCommand "restore") }}
+		{{ $backupChannelID	:= $arg4 }}
+		{{ $backupMessageID	:= $arg5 }}
+	{{ else if ( contains "dupe") }}
+		{{ $update 	= false }} 
+		{{ $new 	= true }}
+		{{ $targetChannel = $arg5 }}
+		{{ if not ( or ( eq $arg4 "copy" ) ( eq $arg4 "replace" ) ) }}
+			help message
+		{{ else if ( eq $arg4 "replace" ) }}
+			{{ deleteMessage $embedChannelID $embedMessageID }}	
+		{{ end }}
+	{{ else }}
+		Help message
+	{{ end }}
+
+	{{/* Output to log */}}
+	{{ $logMessage := ( print .User.ID " ran `-embed` with args:\n\n```" ($args.Get 0) "```\n\n```" ($args.Get 1) "```\n\n```" ($args.Get 2) "```\n\n```" ($args.Get 3) "```\n\n```" ($args.Get 4) "```" ) ) }}
+	{{ sendMessage $logChannel $logMessage }}
+	{{ sendMessage $logChannel $embedOld }}
+	{{ sendMessage $logChannel $embedUpdate }}
+
+	{{/* Update original embed in place */}}
+	{{ if $update }} 
+		{{ template "constructEmbed"
+			$color $authorName $authorURL
+			$authorIcon $embedThumbnail $embedTitle
+			$embedDescription $fields $embedFooter
+			$timestamp }}
+		{{ editMessage $embedChannelID $embedMessageID $embedUpdate }}
+	{{ end }}
+
+	{{/* Send new embed to target location */}}
+	{{ if $new }} {{ sendMessage $targetChannel $embedUpdate }} {{ end }}
+{{ end }}
