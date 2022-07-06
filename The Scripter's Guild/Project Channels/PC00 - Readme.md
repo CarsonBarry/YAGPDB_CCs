@@ -32,14 +32,14 @@ Target: `all`, `<projectGroup>`
 
 `<projectGroup>`: must match one of the project groups defined in **PC01**
 
-	Groups and their reference syntax for `<projectGroup>`:
+	Project groups and their reference syntax for `<projectGroup>`:
 
-	Infinite	->	`infinite` 
-	Legacy Halo	->	`legacyHalo`
-	Unreal		->	`unreal`
-	Unity		->	`unity`
-	Core		->	`core`
-	Fortnite	->	`fortnite`
+	Infinite	->	infinite
+	Legacy Halo	->	legacyHalo
+	Unreal		->	unreal
+	Unity		->	unity
+	Core		->	core
+	Fortnite	->	fortnite
 
 Value: an integer, the number you want to set the relevant projecy count db value to, is not used when using `get` or `help` subcommands
 
