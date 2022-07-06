@@ -77,7 +77,7 @@ Note: *This command must be set to *only* work in the channels that house projec
 
 Syntax:
 
-`-project <[embedMessageID]|[help]> <subCommand> <value>`
+`-project <[embedMessageID]|'help'> <subCommand> <value>`
 
 Performs given subcommand on targeted embed with given value.
 
