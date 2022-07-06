@@ -1,5 +1,6 @@
 
 Purpose:
+
 *Provides infrastructure for managing collaborative projects in Discord. Supports having multiple 'project groups' spread between a channel per group.*
 
 Dependencies:
@@ -28,6 +29,7 @@ Subcommands: `get`, `set`, `help`
 Target: `all`, `<projectGroup>`
 
 `all`: only works with `get`, causes it to print all groups' counts
+
 `<projectGroup>`: must match one of the project groups defined in **PC01**
 
 	Groups and their reference syntax for `<projectGroup>`:
@@ -64,6 +66,7 @@ Approval:
 4. Needle automatically creates a thread attached to that embed message and sends a message inside that thread to explain how to use project channel relevant commands.
 
 Note: 
+
 *Unfotunately, the name of the thread created is not able to be automatically changed. This is resolved when the user first runs `-project` and the thread's name is updated to match the project name. This would handle that if it where able.*
 
 **PC03** `-project`
