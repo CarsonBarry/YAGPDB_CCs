@@ -30,13 +30,13 @@ react: Quick Dupe/Delete
 -embed 
 
 **Project Channel System** - *Req: Dyno, Bot (Forms)*
--projectCount
-react: Form Approval
--project
+  `-projectCount`
+  `react: Form Approval`
+  `-project`
 
 **Thread Share System** - *Req: Needle, Bot (Autothreading)*
--shareSetup
--share
+  `-shareSetup`
+  `-share`
 
 **Configurable Search Link Generator**
--search
+  `-search`
