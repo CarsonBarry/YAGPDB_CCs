@@ -72,7 +72,7 @@ Note: *This command must be set to *only* work in the channels that house projec
 
 Syntax:
 
-`-project <[embedMessageID]|[help]> <subCommand> <value>`
+`-project <[embedMessageID]|[help]> <subCommand> <value>`\n
 Performs given subcommand on targeted embed with given value.
 
 `<[embedMessageID]|[help]>`: Embed Message ID. Copy this from the footer of the Project Embed. Also accepts `help` if only argument given.
