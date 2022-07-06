@@ -20,7 +20,9 @@ Syntax: `-projectCount <subcommand> <target> [value]`
 Subcommands: `get`, `set`, `help`
 
 `get`: prints project counts of all or target project group(s)
+
 `set`: sets project count of target project group and prints info about the change
+
 `help`: prints help message
 
 Target: `all`, `<projectGroup>`
@@ -77,7 +79,9 @@ Syntax:
 Performs given subcommand on targeted embed with given value.
 
 `<[embedMessageID]|[help]>`: Embed Message ID. Copy this from the footer of the Project Embed. Also accepts `help` if only argument given.
+
 `<subCommand>`: Subcommand. Each valueAccepted values: `version`, `name`, `description`, `links`, `addLead`, `removeLead`, `addContributor`, and `removeContributor`.
+
 `<value>`: Relevant input per Subcommand. `description` and `links` subcommands accept normal message formatting and as a line break, but you can just add line breaks in your command message. Enclose in double quotes "like this" if you use any spaces in this argument.
 
 
