@@ -18,7 +18,7 @@ it ran
 {{ $reactionMessageID := .ReactionMessage.ID }}
 
 {{ if and
-	(eq (index .ReactionMessage.Reactions 0).Emoji.Name "👍")
+	(eq (index .ReactionMessage.Reactions 0).Emoji.Name "v")
 	(eq (index .ReactionMessage.Reactions 0).Count 2)
 }}
 	{{ $embedInput := (index .Message.Embeds 0) }}
@@ -67,7 +67,7 @@ it ran
 	{{ else if (reFind `:dynoSuccess: Other` $editorfield) }}
 		{{ $messageTarget = "982661501766754355" }}
 		{{ $projectCount = "0" }}
-		{{ $titlePrefixCode = "MT" }}
+		{{ $titlePrefixCode = "MP" }}
 	{{ end }}
 	
 	{{ if (lt $projectCount 10 ) }}
