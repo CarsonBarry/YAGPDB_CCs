@@ -26,8 +26,8 @@ Advanced
 *Same as Basic, but adds more emoji reactions/functions and also stores the current LFG roster in fields in the embed for different topics. Roster updates every 5 minutes. LFG role status is controlled via information changes in embed rather than delayed removal right after adding the role; this allows users to 're-up' and reset their timer before it runs out as well as remove themselves from the LFG roster early.*
 
 **Embed Manipulation Commands**
-react: Quick Dupe/Delete
--embed 
+  `react: Quick Dupe/Delete`
+  `-embed`
 
 **Project Channel System** - *Req: Dyno, Bot (Forms)*
   `-projectCount`
