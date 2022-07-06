@@ -19,10 +19,10 @@ YAGPDB CC's I've written to handle various tasks for the servers I admin.
 
 **LFG Role**
 
-Basic
+Basic:
 *Creates an embed and places the <inserthere> emoji as a reaction on the embed's message. Users who react to that message with the same reaction will have your LFG role assigned and a 30 minute delay will be set to remove it. Users will receive a direct message letting them know they are set to LFG. Users can only run this command if they are not currently set to LFG.*
 
-Advanced
+Advanced:
 *Same as Basic, but adds more emoji reactions/functions and also stores the current LFG roster in fields in the embed for different topics. Roster updates every 5 minutes. LFG role status is controlled via information changes in embed rather than delayed removal right after adding the role; this allows users to 're-up' and reset their timer before it runs out as well as remove themselves from the LFG roster early.*
 
 **Embed Manipulation Commands**
