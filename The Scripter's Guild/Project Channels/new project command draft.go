@@ -76,40 +76,20 @@
 		-}}
 	{{ end }}
 
-	{{/* TODO: add the remainder of subcommands to the if-else below and syntax references above */}}
+	{{/* TODO: add the remainder of subcommands to the if-else below and update syntax references above and logMessage constructor below */}}
 
 	{{/* process subCommand */}}
-	{{ if ( eq $subCommand "author") }}
-		{{ $authorName = $value }}
-	{{ else if ( eq $subCommand "thumbnail") }}
-		{{ $embedThumbnail = $value }}
-	{{ else if ( eq $subCommand "title") }}  
-		{{ $embedTitle = $value }}
-	{{ else if ( eq $subCommand "description") }}  
-		{{ $embedDescription = $value }}
-	{{ else if ( eq $subCommand "footer") }}  
-		{{ $embedFooter = (sdict "text" $embedFooterText) }}
-	{{ else if ( <<contains field>> }}
-		{{ template field }}
-	{{ else if ( eq $subCommand "restore") }}
-		{{ $backupChannelID	:= $arg4 }}
-		{{ $backupMessageID	:= $arg5 }}
-	{{ else if ( contains "dupe") }}
-		{{ $update 	= false }} 
-		{{ $new 	= true }}
-		{{ $targetChannel = $arg5 }}
-		{{ if not ( or ( eq $arg4 "copy" ) ( eq $arg4 "replace" ) ) }}
-			help message
-		{{ else if ( eq $arg4 "replace" ) }}
-			{{ deleteMessage $embedChannelID $embedMessageID }}	
-		{{ end }}
+	{{ if ( eq $subCommand "") }}
+		{{ $ = $value }}
+	{{ else if ( eq $subCommand "") }}
+		{{ $ = $value }}
 	{{ else }}
 		{{/* send help message */}} 
 		{{ sendMessage nil "help message" }}
 	{{ end }}
 
 	{{/* Output to log */}}
-	{{ $logMessage := ( print .User.ID " ran `-embed` with args:\n\n```" ($args.Get 0) "```\n\n```" ($args.Get 1) "```\n\n```" ($args.Get 2) "```\n\n```" ($args.Get 3) "```\n\n```" ($args.Get 4) "```" ) ) }}
+	{{ $logMessage := ( print .User.ID " ran `-project` with args:\n\n```" ($args.Get 0) "```\n\n```" ($args.Get 1) "```\n\n```" ($args.Get 2) "```\n\n```" ($args.Get 3) "```\n\n```" ($args.Get 4) "```" ) ) }}
 	{{ sendMessage $logChannel $logMessage }}
 	{{ sendMessage $logChannel $embedOld }}
 	{{ sendMessage $logChannel $embedUpdate }}
